@@ -1,0 +1,13 @@
+<h1>Currently Playing Movies</h1>
+
+<ul>
+  {% for movie in movies %}
+    <li>
+      {{ movie.title }} ({{ movie.release_date }})
+      {% if movie.poster_path %}
+        <br>
+        <img src="https://image.tmdb.org/t/p/w200{{ movie.poster_path }}" alt="{{ movie.title }}">
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
