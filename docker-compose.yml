@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: infra/docker/Dockerfile
-    image: mrnobody0/my-web-app:v1.0.1
+    image: mrnobody0/my-web-app:v1.0.2
     container_name: django-app
     env_file:
       - .env
