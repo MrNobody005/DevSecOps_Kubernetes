@@ -18,7 +18,3 @@ def register_view(request):
         form = RegisterForm()
 
     return render(request, "accounts/register.html", {"form": form})
-
-@login_required
-def home(request):
-    return render(request, 'accounts/home.html')

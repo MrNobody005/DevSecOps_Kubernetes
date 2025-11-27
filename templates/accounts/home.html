@@ -1,4 +1,47 @@
-<h1>Welcome {{ request.user.username }}!</h1>
-<p>You are logged in.</p>
+{% extends "base.html" %}
+{% load static %}
 
-<a href="{% url 'login' %}">Logout</a>
+{% block title %}Profile - MyMovies{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">{{ user.username }}'s Profile</h1>
+
+<h2 class="section-title">Favorites</h2>
+<div class="movie-grid">
+    {% for movie in favorite_movies %}
+        <div class="movie-card">
+            <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" class="poster">
+        </div>
+    {% empty %}
+        <p>No favorites yet.</p>
+    {% endfor %}
+</div>
+
+<h2 class="section-title">Will Watch</h2>
+<div class="movie-grid">
+    {% for movie in will_watch_movies %}
+        <div class="movie-card">
+            <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" class="poster">
+        </div>
+    {% empty %}
+        <p>Nothing planned yet.</p>
+    {% endfor %}
+</div>
+
+<h2 class="section-title">Watched</h2>
+<div class="movie-grid">
+    {% for movie in watched_movies %}
+        <div class="movie-card">
+            <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" class="poster">
+        </div>
+    {% empty %}
+        <p>No watched movies yet.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
