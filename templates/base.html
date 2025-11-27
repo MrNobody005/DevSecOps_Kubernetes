@@ -6,7 +6,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}MyMovies{% endblock %}</title>
+    <title>{% block title %}FILMARI{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
@@ -16,8 +16,11 @@
 
     <div class="nav-links">
         <a href="/">Home</a>
-        <a href="/home/">Profile</a>
-        <a href="/logout/">Logout</a>
+        <a href="/profile/">Profile</a>
+        <form action="{% url 'logout' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="navbar-link">Logout</button>
+    </form>
     </div>
 </nav>
 

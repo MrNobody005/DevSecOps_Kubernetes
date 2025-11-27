@@ -20,7 +20,7 @@
                 <h3>{{ movie.title }}</h3>
 
                 <div class="actions">
-                    <a href="{% url 'toggle_favorite' movie.id %}">
+                    <a href="{% url 'toggle_favorite' movie.id %}?title={{ movie.title|urlencode }}&poster_path={{ movie.poster_path|urlencode }}&release_date={{ movie.release_date }}">
                         {% if movie.user_data.favorite %}
                             ❤️
                         {% else %}
@@ -28,12 +28,12 @@
                         {% endif %}
                     </a>
 
-                    <a href="{% url 'set_status' movie.id 'will_watch' %}">
-                        {% if movie.user_data.status == 'will_watch' %}✔{% else %}➕{% endif %}
+                    <a href="{% url 'set_status' movie.id 'will_watch' %}?title={{ movie.title|urlencode }}&poster_path={{ movie.poster_path|urlencode }}&release_date={{ movie.release_date }}">
+                        {% if movie.user_data.status == 'will_watch' %}✔{% else %}✔{% endif %}
                     </a>
 
-                    <a href="{% url 'set_status' movie.id 'watched' %}">
-                        {% if movie.user_data.status == 'watched' %}🎬{% else %}➕{% endif %}
+                   <a href="{% url 'set_status' movie.id 'watched' %}?title={{ movie.title|urlencode }}&poster_path={{ movie.poster_path|urlencode }}&release_date={{ movie.release_date }}">
+                        {% if movie.user_data.status == 'watched' %}🎬{% else %}👁️{% endif %}
                     </a>
                 </div>
             </div>
