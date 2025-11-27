@@ -26,11 +26,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-default-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False")
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
 TMDB_API_KEY = os.environ.get("TMDB_API_KEY")
 
-ALLOWED_HOSTS = []
+HOST_IP = os.environ.get("HOST_IP")
+print(f"HOST_IP = {HOST_IP}")  # juste pour debug
+ALLOWED_HOSTS = [HOST_IP, "localhost", "127.0.0.1"]
+
 
 
 # Application definition
@@ -83,17 +86,6 @@ LOGIN_URL = '/login/'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'filmaridb',
-        'USER': 'postgres',
-        'PASSWORD': 'Komanda',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
 
 
 # Password validation
@@ -155,3 +147,14 @@ if os.environ.get("DJANGO_ENV") == "production":
             "PASSWORD": os.environ.get("DB_PASSWORD"),
         }
     }
+# else:
+#     DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'filmaridb',
+#         'USER': 'postgres',
+#         'PASSWORD': 'Komanda',
+#         'HOST': 'localhost',
+#         'PORT': '5432',
+#     }
+# }

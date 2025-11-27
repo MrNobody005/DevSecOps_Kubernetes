@@ -46,16 +46,16 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: db-secret
-                  key: POSTGRES_DB
+                  key: DB_NAME
 
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: db-secret
-                  key: POSTGRES_USER
+                  key: DB_USER
                   
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: db-secret
-                  key: POSTGRES_PASSWORD
+                  key: DB_PASSWORD

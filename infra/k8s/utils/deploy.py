@@ -1,7 +1,6 @@
 import subprocess
 
 files = [
-    "../secret-db.yaml",
     "../postgres-pvc.yaml",
     "../postgres-deployment.yaml",
     "../service-db.yaml",
