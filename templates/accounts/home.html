@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Profile - MyMovies{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">{{ user.username }}'s Profile</h1>
+
+<!-- Favorites Section -->
+<h2 class="section-title">Favorites</h2>
+<div class="movie-grid">
+    {% for movie in favorite_movies %}
+        <div class="movie-card">
+            {% if movie.poster_path %}
+                <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" class="poster">
+            {% else %}
+                <div class="no-poster">No Image</div>
+            {% endif %}
+            <div class="movie-info">
+                <h3>{{ movie.title }}</h3>
+                {% if movie.release_date %}<p>{{ movie.release_date }}</p>{% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p>No favorites yet.</p>
+    {% endfor %}
+</div>
+
+<!-- Will Watch Section -->
+<h2 class="section-title">Will Watch</h2>
+<div class="movie-grid">
+    {% for movie in will_watch_movies %}
+        <div class="movie-card">
+            {% if movie.poster_path %}
+                <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" class="poster">
+            {% else %}
+                <div class="no-poster">No Image</div>
+            {% endif %}
+            <div class="movie-info">
+                <h3>{{ movie.title }}</h3>
+                {% if movie.release_date %}<p>{{ movie.release_date }}</p>{% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p>Nothing planned yet.</p>
+    {% endfor %}
+</div>
+
+<!-- Watched Section -->
+<h2 class="section-title">Watched</h2>
+<div class="movie-grid">
+    {% for movie in watched_movies %}
+        <div class="movie-card">
+            {% if movie.poster_path %}
+                <img src="https://image.tmdb.org/t/p/w300{{ movie.poster_path }}" class="poster">
+            {% else %}
+                <div class="no-poster">No Image</div>
+            {% endif %}
+            <div class="movie-info">
+                <h3>{{ movie.title }}</h3>
+                {% if movie.release_date %}<p>{{ movie.release_date }}</p>{% endif %}
+            </div>
+        </div>
+    {% empty %}
+        <p>No watched movies yet.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
