@@ -14,26 +14,46 @@ spec:
     spec:
       containers:
         - name: web
-          image: mrnobody0/my-web-app:v1.0.0
+          image: mrnobody0/my-web-app:v1.0.1
           ports:
             - containerPort: 8000
           env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: SECRET_KEY
+
             - name: DJANGO_ENV
-              value: "production"
+              valueFrom:
+                configMapKeyRef:
+                  name: web-config
+                  key: DJANGO_ENV
+
             - name: DB_HOST
-              value: "postgres-service"
+              valueFrom:
+                configMapKeyRef:
+                  name: web-config
+                  key: DB_HOST
+
             - name: DB_PORT
-              value: "5432"
+              valueFrom:
+                configMapKeyRef:
+                  name: web-config
+                  key: DB_PORT
+
             - name: DB_NAME
               valueFrom:
                 secretKeyRef:
                   name: db-secret
                   key: POSTGRES_DB
+
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
                   name: db-secret
                   key: POSTGRES_USER
+                  
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:

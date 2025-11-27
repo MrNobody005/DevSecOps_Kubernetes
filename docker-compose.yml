@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: infra/docker/Dockerfile
+    container_name: django-app
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    command: ["/entrypoint.sh"]
+    volumes:
+      - ./:/app
+
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
