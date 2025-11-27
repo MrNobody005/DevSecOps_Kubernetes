@@ -28,7 +28,7 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 TMDB_API_KEY = config("TMDB_API_KEY")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # For k8s; tighten in production
 
 
 # Application definition
@@ -84,11 +84,11 @@ LOGIN_URL = '/login/'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'filmaridb',
-        'USER': 'postgres',
-        'PASSWORD': 'Komanda',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': config('DB_NAME', default='filmaridb'),
+        'USER': config('DB_USER', default='postgres'),
+        'PASSWORD': config('DB_PASSWORD', default='Komanda'),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='5432'),
     }
 }
 
