@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: devsecops-config
+  namespace: devsecops
+data:
+  DEBUG: "True"
+  DJANGO_SETTINGS_MODULE: "backend.settings"
+  DB_NAME: "filmaridb"
+  DB_USER: "postgres"
+  DB_HOST: "postgres"
+  DB_PORT: "5432"
