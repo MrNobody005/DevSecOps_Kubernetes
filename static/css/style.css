@@ -1,6 +1,6 @@
 /* Global Dark Theme */
 body {
-    background-color: #14181c;
+    background-color: #ff5c98;
     color: #d8d8d8;
     font-family: Arial, sans-serif;
     margin: 0;
@@ -8,7 +8,7 @@ body {
 
 /* Navbar */
 .navbar {
-    background-color: #1f2327;
+    background-color: #b43061;
     padding: 15px 30px;
     display: flex;
     justify-content: space-between;
@@ -16,19 +16,19 @@ body {
 }
 
 .navbar .logo {
-    color: #00e054;
+    color: #e4adba;
     font-weight: bold;
     font-size: 24px;
 }
 
 .navbar a {
-    color: #d8d8d8;
+    color: #e4adba;
     margin-left: 20px;
     text-decoration: none;
 }
 
 .navbar .navbar-link {
-    color: #d8d8d8;
+    color: #e4adba;
     margin-left: 20px;
     text-decoration: none;
     background: none;
@@ -52,13 +52,13 @@ body {
 
 /* Titles */
 .page-title {
-    color: #ffffff;
+    color: #2e4d23;
     font-size: 32px;
     margin-bottom: 20px;
 }
 
 .section-title {
-    color: #00e054;
+    color: #bb1753;
     margin-top: 40px;
 }
 
@@ -81,11 +81,12 @@ body {
     height: auto;
     display: block;
     transition: transform .2s ease, filter .2s ease;
+    background: linear-gradient(transparent, rgba(255, 103, 169, 0.8));
 }
 
 .movie-card:hover .poster {
     transform: scale(1.05);
-    filter: brightness(60%);
+    filter: brightness(0.6);
 }
 
 /* Overlay */
@@ -94,7 +95,7 @@ body {
     bottom: 0;
     width: 100%;
     padding: 10px;
-    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    background: linear-gradient(transparent, rgba(255, 103, 169, 0.8));
     opacity: 0;
     transition: opacity .2s ease;
 }
@@ -129,7 +130,7 @@ body {
 }
 
 .login-container h2 {
-    color: #00e054;
+    color: #90c47d;
     font-size: 28px;
     text-align: center;
     margin-bottom: 25px;
@@ -144,32 +145,33 @@ body {
     padding: 10px;
     border: 1px solid #333;
     border-radius: 6px;
-    background-color: #14181c;
-    color: #d8d8d8;
+    background-color: #90c47d;
+    color: #000000;
     font-size: 16px;
 }
 
 .login-form input:focus {
     outline: none;
-    border-color: #00e054;
+    border-color: #3b7824;
 }
 
 .btn-submit {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
-    background-color: #00e054;
+    background-color: #3b7824;
     border: none;
     border-radius: 6px;
     font-size: 16px;
     font-weight: bold;
-    color: #14181c;
+    color: #c9c9c9;
     cursor: pointer;
     transition: background 0.2s ease;
 }
 
 .btn-submit:hover {
-    background-color: #00c543;
+    background-color: #ff97b8;
+    color: #000000;
 }
 
 .login-footer {
@@ -185,8 +187,8 @@ body {
 .btn-register {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #00e054;
-    color: #14181c;
+    background-color: #f45d83;
+    color: #000000;
     text-decoration: none;
     border-radius: 6px;
     font-weight: bold;
@@ -194,5 +196,6 @@ body {
 }
 
 .btn-register:hover {
-    background-color: #00c543;
+    background-color: #ff97b8;
+    color: #c9c9c9;
 }
