@@ -73,7 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-LOGIN_REDIRECT_URL = '/home/'
+LOGIN_REDIRECT_URL = '/profile/'
 LOGOUT_REDIRECT_URL = '/login/'
 LOGIN_URL = '/login/'
 
