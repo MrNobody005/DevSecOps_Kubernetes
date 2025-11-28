@@ -32,7 +32,7 @@ TMDB_API_KEY = os.environ.get("TMDB_API_KEY")
 
 HOST_IP = os.environ.get("HOST_IP")
 print(f"HOST_IP = {HOST_IP}")  # juste pour debug
-ALLOWED_HOSTS = [HOST_IP, "localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["*"]
 
 
 
