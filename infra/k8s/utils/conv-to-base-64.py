@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv('../../../.env')
 
-keys = ["DB_NAME", "DB_USER", "DB_PASSWORD", "SECRET_KEY"]
+keys = ["POSTGRES_DB", "POSTGRES_USER", "POSTGRES_PASSWORD", "SECRET_KEY"]
 
 # Dictionnaire pour stocker les valeurs encodées
 encoded = {}
