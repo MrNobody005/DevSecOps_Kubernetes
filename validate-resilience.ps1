@@ -23,8 +23,8 @@ Write-Host ""
 
 # Test 2: Ensure test data exists
 Write-Host "[2/5] Seeding test data..." -ForegroundColor Yellow
-$seedCmd = "from django.contrib.auth.models import User; from movie.models import UserMovie; u,_=User.objects.get_or_create(username='testuser'); u.set_password('testpass123'); u.save(); UserMovie.objects.get_or_create(user=u, movie_id=99999, defaults={'title':'Test Resilience','release_date':'2025-01-01'}); print('Users:',User.objects.count(),'Movies:',UserMovie.objects.count())"
-$seedResult = kubectl exec -n devsecops deploy/web -- python manage.py shell -c "$seedCmd" 2>&1
+$seedCmd = 'from django.contrib.auth.models import User; from movie.models import UserMovie; u,_=User.objects.get_or_create(username=\"testuser\"); u.set_password(\"testpass123\"); u.save(); UserMovie.objects.get_or_create(user=u, movie_id=99999, defaults={\"title\":\"Test Resilience\",\"release_date\":\"2025-01-01\"}); print(\"Users:\",User.objects.count(),\"Movies:\",UserMovie.objects.count())'
+$seedResult = kubectl exec -n devsecops deploy/web -- python manage.py shell -c $seedCmd 2>&1
 if ($seedResult -match "Users:.*Movies:" -and $LASTEXITCODE -eq 0) {
     Write-Host "✓ Test data created" -ForegroundColor Green
     Write-Host $seedResult
@@ -40,8 +40,8 @@ kubectl rollout restart deploy/web -n devsecops | Out-Null
 $rolloutOk = $LASTEXITCODE -eq 0
 kubectl rollout status deploy/web -n devsecops --timeout=90s | Out-Null
 $rolloutOk = $rolloutOk -and ($LASTEXITCODE -eq 0)
-$checkWebCmd = "from movie.models import UserMovie; print('Movies after web restart:', UserMovie.objects.count())"
-$webResult = kubectl exec -n devsecops deploy/web -- python manage.py shell -c "$checkWebCmd" 2>&1
+$checkWebCmd = 'from movie.models import UserMovie; print(\"Movies after web restart:\", UserMovie.objects.count())'
+$webResult = kubectl exec -n devsecops deploy/web -- python manage.py shell -c $checkWebCmd 2>&1
 if ($webResult -match "Movies after web restart: \d+" -and $rolloutOk) {
     Write-Host "✓ Web pod restarted, data persisted" -ForegroundColor Green
     Write-Host $webResult
@@ -57,8 +57,8 @@ kubectl delete pod -l app=postgres -n devsecops | Out-Null
 $deleteOk = $LASTEXITCODE -eq 0
 kubectl wait --for=condition=ready pod -l app=postgres -n devsecops --timeout=120s | Out-Null
 $waitOk = $LASTEXITCODE -eq 0
-$checkDbCmd = "from django.contrib.auth.models import User; from movie.models import UserMovie; print('Users:',User.objects.count(),'Movies:',UserMovie.objects.count())"
-$dbResult = kubectl exec -n devsecops deploy/web -- python manage.py shell -c "$checkDbCmd" 2>&1
+$checkDbCmd = 'from django.contrib.auth.models import User; from movie.models import UserMovie; print(\"Users:\",User.objects.count(),\"Movies:\",UserMovie.objects.count())'
+$dbResult = kubectl exec -n devsecops deploy/web -- python manage.py shell -c $checkDbCmd 2>&1
 if ($dbResult -match "Users:.*Movies:" -and $deleteOk -and $waitOk) {
     Write-Host "✓ Postgres restarted, PVC data persisted" -ForegroundColor Green
     Write-Host $dbResult
