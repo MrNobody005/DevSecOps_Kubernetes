@@ -13,10 +13,10 @@ $totalTests = 5
 Write-Host "[1/5] Checking resources..." -ForegroundColor Yellow
 $podsStatus = kubectl get pods -n devsecops -o jsonpath='{.items[*].status.phase}' 2>&1
 if ($podsStatus -match "Running" -and $LASTEXITCODE -eq 0) {
-    Write-Host "✓ All pods running" -ForegroundColor Green
+    Write-Host "Pass: All pods running" -ForegroundColor Green
     $score++
 } else {
-    Write-Host "✗ Pods not all running" -ForegroundColor Red
+    Write-Host "Fail: Pods not all running" -ForegroundColor Red
 }
 kubectl get pods,svc,pvc -n devsecops
 Write-Host ""
@@ -26,11 +26,11 @@ Write-Host "[2/5] Seeding test data..." -ForegroundColor Yellow
 $seedCmd = 'from django.contrib.auth.models import User; from movie.models import UserMovie; u,_=User.objects.get_or_create(username=\"testuser\"); u.set_password(\"testpass123\"); u.save(); UserMovie.objects.get_or_create(user=u, movie_id=99999, defaults={\"title\":\"Test Resilience\",\"release_date\":\"2025-01-01\"}); print(\"Users:\",User.objects.count(),\"Movies:\",UserMovie.objects.count())'
 $seedResult = kubectl exec -n devsecops deploy/web -- python manage.py shell -c $seedCmd 2>&1
 if ($seedResult -match "Users:.*Movies:" -and $LASTEXITCODE -eq 0) {
-    Write-Host "✓ Test data created" -ForegroundColor Green
+    Write-Host "Pass: Test data created" -ForegroundColor Green
     Write-Host $seedResult
     $score++
 } else {
-    Write-Host "✗ Test data creation failed" -ForegroundColor Red
+    Write-Host "Fail: Test data creation failed" -ForegroundColor Red
 }
 Write-Host ""
 
@@ -43,11 +43,11 @@ $rolloutOk = $rolloutOk -and ($LASTEXITCODE -eq 0)
 $checkWebCmd = 'from movie.models import UserMovie; print(\"Movies after web restart:\", UserMovie.objects.count())'
 $webResult = kubectl exec -n devsecops deploy/web -- python manage.py shell -c $checkWebCmd 2>&1
 if ($webResult -match "Movies after web restart: \d+" -and $rolloutOk) {
-    Write-Host "✓ Web pod restarted, data persisted" -ForegroundColor Green
+    Write-Host "Pass: Web pod restarted, data persisted" -ForegroundColor Green
     Write-Host $webResult
     $score++
 } else {
-    Write-Host "✗ Web restart or data verification failed" -ForegroundColor Red
+    Write-Host "Fail: Web restart or data verification failed" -ForegroundColor Red
 }
 Write-Host ""
 
@@ -60,11 +60,11 @@ $waitOk = $LASTEXITCODE -eq 0
 $checkDbCmd = 'from django.contrib.auth.models import User; from movie.models import UserMovie; print(\"Users:\",User.objects.count(),\"Movies:\",UserMovie.objects.count())'
 $dbResult = kubectl exec -n devsecops deploy/web -- python manage.py shell -c $checkDbCmd 2>&1
 if ($dbResult -match "Users:.*Movies:" -and $deleteOk -and $waitOk) {
-    Write-Host "✓ Postgres restarted, PVC data persisted" -ForegroundColor Green
+    Write-Host "Pass: Postgres restarted, PVC data persisted" -ForegroundColor Green
     Write-Host $dbResult
     $score++
 } else {
-    Write-Host "✗ Postgres restart or PVC verification failed" -ForegroundColor Red
+    Write-Host "Fail: Postgres restart or PVC verification failed" -ForegroundColor Red
 }
 Write-Host ""
 
@@ -72,10 +72,10 @@ Write-Host ""
 Write-Host "[5/5] Final status check..." -ForegroundColor Yellow
 $finalPods = kubectl get pods -n devsecops -o jsonpath='{.items[*].status.phase}' 2>&1
 if ($finalPods -match "Running" -and $LASTEXITCODE -eq 0) {
-    Write-Host "✓ All pods healthy" -ForegroundColor Green
+    Write-Host "Pass: All pods healthy" -ForegroundColor Green
     $score++
 } else {
-    Write-Host "✗ Some pods unhealthy" -ForegroundColor Red
+    Write-Host "Fail: Some pods unhealthy" -ForegroundColor Red
 }
 kubectl get pods,svc,pvc -n devsecops
 Write-Host ""
@@ -89,11 +89,11 @@ Write-Host "Tests Passed: $score / $totalTests" -ForegroundColor White
 Write-Host "Score: $percentage%" -ForegroundColor $(if ($percentage -ge 80) { "Green" } elseif ($percentage -ge 60) { "Yellow" } else { "Red" })
 Write-Host ""
 if ($percentage -eq 100) {
-    Write-Host "🎉 Perfect score! All resilience tests passed." -ForegroundColor Green
+    Write-Host "Perfect score! All resilience tests passed." -ForegroundColor Green
 } elseif ($percentage -ge 80) {
-    Write-Host "✅ Good! Most resilience tests passed." -ForegroundColor Green
+    Write-Host "Good! Most resilience tests passed." -ForegroundColor Green
 } elseif ($percentage -ge 60) {
-    Write-Host "⚠️  Warning: Some tests failed." -ForegroundColor Yellow
+    Write-Host "Warning: Some tests failed." -ForegroundColor Yellow
 } else {
-    Write-Host "❌ Critical: Multiple tests failed." -ForegroundColor Red
+    Write-Host "Critical: Multiple tests failed." -ForegroundColor Red
 }
